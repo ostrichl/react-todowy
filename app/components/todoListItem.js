@@ -33,7 +33,7 @@ class TodoListItem extends Component {
             return (
                 <td>
                     <form onSubmit={this.onSave.bind(this)}>
-                        <input className="form-input" type="text" defaultValue={this.props.task} ref="editInput"/>
+                        <input className="form-input" type="text" defaultValue={this.props.task} ref="editInput" />
                         {this.renderError()}
                     </form>
                 </td>
@@ -41,7 +41,7 @@ class TodoListItem extends Component {
         }
 
         const taskStyle = {
-            color: this.props.isCompleted ? 'green' : 'red',
+            color: this.props.isCompleted ? 'red' : 'green',
             cursor: 'pointer'
         }
 
@@ -53,7 +53,7 @@ class TodoListItem extends Component {
     }
 
     onSave(event) {
-        event.preventDafult()
+        event.preventDefault()
 
         const oldTask = this.props.task
         const newTask = this.refs.editInput.value

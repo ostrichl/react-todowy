@@ -34,18 +34,53 @@ class App extends React.Component {
                     <h1>React TodoList</h1>
                     <TodoCreate todos={this.state.todos}
                         validateTask={this.validateTask.bind(this)}
-                        createTask={this.createTask.bind(this)}/>
-                    <TodoCreate todos={this.state.todos}
-                        validateTask={this.state.todos.bind(this)}
-                        deleteTask={this.state.todos.bind(this)}
-                        toggle={this.state.todos.bind(this)}
-                        saveTask={this.state.todos.bind(this)}/>
+                        createTask={this.createTask.bind(this)} />
+                    <TodoList todos={this.state.todos}
+                              validateTask={this.validateTask.bind(this)}
+                              deleteTask={this.deleteTask.bind(this)}
+                              toggleTask={this.toggleTask.bind(this)}
+                              saveTask={this.saveTask.bind(this)}/>
                 </div>
                 <div className='col-3'>
                 </div>
             </div>
         )
-    } 
+    }
+
+    createTask(task){
+        this.state.todos.push({
+            task: task,
+            isCompleted: false
+        })
+        this.setState({todos: this.state.todos})
+    }
+
+    validateTask(task){
+        if (!task){
+            return 'Please enter a task~'
+        }else if (_.find(this.state.todos, todo => todo.task === task)){
+            return 'Task already exsits!'
+        }else{
+            return ''
+        }
+    }
+
+    deleteTask(currentTask){
+        _.remove(this.state.todos, todo => todo.task === currentTask)
+        this.setState({todos: this.state.todos})
+    }
+
+    saveTask(oldTask, newTask){
+        const foundTask = _.find(this.state.todos, todo => todo.task === oldTask)
+        foundTask.task = newTask
+        this.setState({todos: this.state.todos})
+    }
+
+    toggleTask(currentTask){
+        const foundTask = _.find(this.state.todos, todo => todo.task === currentTask)
+        foundTask.isCompleted = !foundTask.isCompleted
+        this.setState({todos: this.state.todos})
+    }
 }
 
 export default App
